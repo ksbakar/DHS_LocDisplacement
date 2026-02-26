@@ -44,7 +44,7 @@ prepare_stan_data <- function(f = as.formula(ch_stunt ~ age_of_child + sex_of_ch
   z <- unique(y[, cluster_vars_idz])
   
   ################################################################################
-  ## Create IMAT matrix
+  ## Create IMAT matrix - initial
   ################################################################################
   Ind <- data.frame(clst=y[, cluster_vars_idz[1]])
   for(i in z[,1]){
@@ -58,14 +58,14 @@ prepare_stan_data <- function(f = as.formula(ch_stunt ~ age_of_child + sex_of_ch
   ur <- urban_rural_index12
   
   ################################################################################
-  ## MW matrix
+  ## MW matrix - inital
   ################################################################################
   MW <- (1 - z[,2] %*% solve(t(z[,2]) %*% z[,2]) %*% t(z[,2])) %*% 
     W %*% 
     (1 - z[,2] %*% solve(t(z[,2]) %*% z[,2]) %*% t(z[,2]))
   
   ################################################################################
-  ## Prepare QQ and eigen decomposition
+  ## Prepare QQ and eigen decomposition - initial
   ################################################################################
   x <- model.matrix(f, y)
   phi <- max(d)
@@ -103,7 +103,7 @@ prepare_stan_data <- function(f = as.formula(ch_stunt ~ age_of_child + sex_of_ch
   z$zstar <- zstar
   
   ################################################################################
-  ## Scale z for Stan
+  ## Scale z for Stan - initial
   ################################################################################
   z_scale <- scale(cbind(z[,2], z[, "zstar"]))
   
